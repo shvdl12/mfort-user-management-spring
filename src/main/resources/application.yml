@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/mfort
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: root
+    hikari:
+      connection-test-query: SELECT 1
+
+    jpa:
+      properties:
+        hibernate:
+          format_sql: true
+          implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+          physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      open-in-view: false
+      show-sql: true
