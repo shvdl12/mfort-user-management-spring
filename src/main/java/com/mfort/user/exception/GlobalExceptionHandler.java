@@ -4,7 +4,10 @@ package com.mfort.user.exception;
 import com.mfort.user.common.model.CommonResponse;
 import com.mfort.user.common.model.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,6 +30,11 @@ public class GlobalExceptionHandler {
                 .code(ResponseCode.DUPLICATE_USER_ID.getCode())
                 .message(e.getMessage())
                 .build());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleUserNameNotFoundError(BadCredentialsException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @ExceptionHandler(Exception.class)
