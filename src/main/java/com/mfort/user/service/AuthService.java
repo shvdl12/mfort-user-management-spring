@@ -1,6 +1,5 @@
 package com.mfort.user.service;
 
-import com.mfort.user.exception.UserNotFoundException;
 import com.mfort.user.jwt.JwtTokenProvider;
 import com.mfort.user.jwt.model.JwtToken;
 import com.mfort.user.repository.UserRepository;
@@ -9,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

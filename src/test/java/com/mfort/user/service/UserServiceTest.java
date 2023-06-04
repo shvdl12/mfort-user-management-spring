@@ -4,6 +4,7 @@ import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.SitterUser;
 import com.mfort.user.model.request.ParentSignUpRequest;
 import com.mfort.user.model.request.SitterSignUpRequest;
+import com.mfort.user.model.response.UserInfoResponse;
 import com.mfort.user.model.vo.Children;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +97,59 @@ public class UserServiceTest {
         assertThat(children.get(1).getBirthAt()).isEqualTo(LocalDate.of(2011, 1, 1));
         assertThat(children.get(0).getGender()).isEqualTo("Mail");
         assertThat(children.get(1).getGender()).isEqualTo("Femail");
+    }
+
+    @Test
+    public void get_user_detail_sitter() {
+        SitterSignUpRequest sut = SitterSignUpRequest.builder()
+                .name("홍길동")
+                .birthAt(LocalDate.of(1990, 1, 1))
+                .gender("Mail")
+                .userId("test001")
+                .password("password")
+                .email("test001@gmail.com")
+                .minChildAge(3)
+                .maxChildAge(5)
+                .bio("자기소개")
+                .build();
+
+        userService.signUpSitter(sut);
+
+        UserInfoResponse user = userService.getUserDetail("test001");
+
+        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getMinChildAge()).isEqualTo(3);
+        assertThat(user.getMaxChildAge()).isEqualTo(5);
+        assertThat(user.getBio()).isEqualTo("자기소개");
+    }
+
+    @Test
+    public void get_user_detail_parent() {
+        List<Children> sutChildren = Arrays.asList(
+                new Children(LocalDate.of(2010, 1, 1), "Mail"),
+                new Children(LocalDate.of(2011, 1, 1), "Femail")
+        );
+
+        ParentSignUpRequest sut = ParentSignUpRequest.builder()
+                .name("홍길동")
+                .birthAt(LocalDate.of(1990, 1, 1))
+                .gender("Mail")
+                .userId("test001")
+                .password("password")
+                .email("test001@gmail.com")
+                .children(sutChildren)
+                .requirements("요구사항")
+                .build();
+
+        userService.signUpParent(sut);
+
+        UserInfoResponse user = userService.getUserDetail("test001");
+
+        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getRequirements()).isEqualTo("요구사항");
+        assertThat(user.getChildren().get(0).getBirthAt()).isEqualTo(LocalDate.of(2010, 1, 1));
+        assertThat(user.getChildren().get(1).getBirthAt()).isEqualTo(LocalDate.of(2011, 1, 1));
+        assertThat(user.getChildren().get(0).getGender()).isEqualTo("Mail");
+        assertThat(user.getChildren().get(1).getGender()).isEqualTo("Femail");
     }
 }

@@ -4,13 +4,13 @@ import com.mfort.user.common.model.CommonResponse;
 import com.mfort.user.common.model.ResponseCode;
 import com.mfort.user.model.request.ParentSignUpRequest;
 import com.mfort.user.model.request.SitterSignUpRequest;
+import com.mfort.user.model.response.UserInfoResponse;
 import com.mfort.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -39,6 +39,17 @@ public class UserController {
 
         CommonResponse response = CommonResponse.builder()
                 .code(ResponseCode.SUCCESS.getCode())
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<?> getUserDetail(@AuthenticationPrincipal UserDetails userDetails) {
+
+        CommonResponse<UserInfoResponse> response = CommonResponse.<UserInfoResponse>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .data(userService.getUserDetail(userDetails.getUsername()))
                 .build();
 
         return ResponseEntity.ok(response);
