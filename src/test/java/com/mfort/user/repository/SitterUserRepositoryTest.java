@@ -1,6 +1,6 @@
 package com.mfort.user.repository;
 
-import com.mfort.user.model.domain.Sitter;
+import com.mfort.user.model.domain.SitterUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-public class SitterRepositoryTest {
+public class SitterUserRepositoryTest {
 
     @Autowired
     private SitterRepository sitterRepository;
@@ -20,7 +20,7 @@ public class SitterRepositoryTest {
     @Test
     public void save_sitter_correctly_save() {
 
-        Sitter sut = Sitter.builder()
+        SitterUser sut = SitterUser.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
@@ -34,17 +34,17 @@ public class SitterRepositoryTest {
 
         sitterRepository.save(sut);
 
-        Sitter sitter = sitterRepository.findByUserId("test001");
+        SitterUser sitterUser = sitterRepository.findByUserId("test001");
 
-        assertThat(sitter.getName()).isEqualTo("홍길동");
-        assertThat(sitter.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
-        assertThat(sitter.getGender()).isEqualTo("Mail");
-        assertThat(sitter.getUserId()).isEqualTo("test001");
-        assertThat(sitter.getPassword()).isEqualTo("password");
-        assertThat(sitter.getEmail()).isEqualTo("test001@gmail.com");
-        assertThat(sitter.getMinChildAge()).isEqualTo(3);
-        assertThat(sitter.getMaxChildAge()).isEqualTo(5);
-        assertThat(sitter.getBio()).isEqualTo("자기소개");
-        assertThat(sitter.getCreatedAt()).isNotNull();
+        assertThat(sitterUser.getName()).isEqualTo("홍길동");
+        assertThat(sitterUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
+        assertThat(sitterUser.getGender()).isEqualTo("Mail");
+        assertThat(sitterUser.getUserId()).isEqualTo("test001");
+        assertThat(sitterUser.getPassword()).isEqualTo("password");
+        assertThat(sitterUser.getEmail()).isEqualTo("test001@gmail.com");
+        assertThat(sitterUser.getMinChildAge()).isEqualTo(3);
+        assertThat(sitterUser.getMaxChildAge()).isEqualTo(5);
+        assertThat(sitterUser.getBio()).isEqualTo("자기소개");
+        assertThat(sitterUser.getCreatedAt()).isNotNull();
     }
 }

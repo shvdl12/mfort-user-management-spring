@@ -30,7 +30,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation group: 'io.hypersistence', name: 'hypersistence-utils-hibernate-55', version: '3.4.1'
-
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'

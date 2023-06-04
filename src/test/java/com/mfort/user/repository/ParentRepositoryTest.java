@@ -1,6 +1,6 @@
 package com.mfort.user.repository;
 
-import com.mfort.user.model.domain.Parent;
+import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.vo.Children;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,12 @@ public class ParentRepositoryTest {
 
     @Test
     public void save_parent_correctly_save() {
-
         List<Children> sutChildren = Arrays.asList(
                 new Children(LocalDate.of(2010, 1, 1), "Mail"),
                 new Children(LocalDate.of(2011, 1, 1), "Femail")
         );
 
-        Parent sut = Parent.builder()
+        ParentUser sut = ParentUser.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
@@ -41,17 +40,17 @@ public class ParentRepositoryTest {
 
         parentRepository.save(sut);
 
-        Parent parent = parentRepository.findByUserId("test001");
+        ParentUser parentUser = parentRepository.findByUserId("test001");
 
-        assertThat(parent.getName()).isEqualTo("홍길동");
-        assertThat(parent.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
-        assertThat(parent.getGender()).isEqualTo("Mail");
-        assertThat(parent.getUserId()).isEqualTo("test001");
-        assertThat(parent.getPassword()).isEqualTo("password");
-        assertThat(parent.getEmail()).isEqualTo("test001@gmail.com");
-        assertThat(parent.getRequirements()).isEqualTo("요구사항");
+        assertThat(parentUser.getName()).isEqualTo("홍길동");
+        assertThat(parentUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
+        assertThat(parentUser.getGender()).isEqualTo("Mail");
+        assertThat(parentUser.getUserId()).isEqualTo("test001");
+        assertThat(parentUser.getPassword()).isEqualTo("password");
+        assertThat(parentUser.getEmail()).isEqualTo("test001@gmail.com");
+        assertThat(parentUser.getRequirements()).isEqualTo("요구사항");
 
-        List<Children> children = parent.getChildren();
+        List<Children> children = parentUser.getChildren();
 
         assertThat(children.size()).isEqualTo(2);
         assertThat(children.get(0).getBirthAt()).isEqualTo(LocalDate.of(2010, 1, 1));

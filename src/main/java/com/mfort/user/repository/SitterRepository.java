@@ -1,13 +1,13 @@
 package com.mfort.user.repository;
 
-import com.mfort.user.model.domain.Sitter;
+import com.mfort.user.model.domain.SitterUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SitterRepository extends JpaRepository<Sitter, Integer> {
+public interface SitterRepository extends JpaRepository<SitterUser, Integer> {
     boolean existsByUserId(String userId);
 
-    Sitter findByUserId(String userId);
+    SitterUser findByUserId(String userId);
 
 }
