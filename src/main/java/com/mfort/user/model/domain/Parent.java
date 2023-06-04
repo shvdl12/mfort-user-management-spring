@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.mfort.user.model.vo.Children;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -37,6 +38,9 @@ public class Parent {
     @Type(type = "json")
     @Column(name = "children", columnDefinition = "longtext")
     private List<Children> children;
+    private String requirements;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Builder
     public Parent(Integer userNumber, String name, LocalDate birthAt, String gender, String userId, String password
@@ -51,20 +55,5 @@ public class Parent {
         this.children = children;
         this.requirements = requirements;
         this.createdAt = createdAt;
-    }
-
-    private String requirements;
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @Getter
-    @ToString
-    @AllArgsConstructor
-    public static class Children {
-        @JsonSerialize(using = LocalDateSerializer.class)
-        @JsonDeserialize(using = LocalDateDeserializer.class)
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        private LocalDate birthAt;
-        private String gender;
     }
 }
