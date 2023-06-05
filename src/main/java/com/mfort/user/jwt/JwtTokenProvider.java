@@ -1,5 +1,7 @@
 package com.mfort.user.jwt;
 
+import com.mfort.user.common.model.ResponseCode;
+import com.mfort.user.exception.ApiException;
 import com.mfort.user.jwt.model.JwtToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -8,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -60,7 +61,7 @@ public class JwtTokenProvider {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get("auth") == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new ApiException(ResponseCode.INVALID_ACCESS_TOKEN);
         }
 
         Collection<? extends GrantedAuthority> authorities =

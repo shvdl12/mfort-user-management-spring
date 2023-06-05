@@ -1,7 +1,8 @@
 package com.mfort.user.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mfort.user.exception.DuplicateUserIdException;
+import com.mfort.user.common.model.ResponseCode;
+import com.mfort.user.exception.ApiException;
 import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.SitterUser;
 import com.mfort.user.model.domain.User;
@@ -34,7 +35,7 @@ public class UserService {
     public SitterUser signUpSitter(SitterSignUpRequest request) {
 
         if (userRepository.existsByUserId(request.getUserId())) {
-            throw new DuplicateUserIdException("이미 존재하는 아이디입니다. (" + request.getUserId() + ")");
+            throw new ApiException(ResponseCode.DUPLICATE_USER_ID);
         }
 
         SitterUser sitterUser = SitterUser.builder()
@@ -55,7 +56,7 @@ public class UserService {
     public ParentUser signUpParent(ParentSignUpRequest request) {
 
         if (userRepository.existsByUserId(request.getUserId())) {
-            throw new DuplicateUserIdException("이미 존재하는 아이디입니다. (" + request.getUserId() + ")");
+            throw new ApiException(ResponseCode.DUPLICATE_USER_ID);
         }
 
         ParentUser parentUser = ParentUser.builder()
@@ -115,7 +116,7 @@ public class UserService {
 
         //TODO 에러 정의하기
         if (sitterRepository.existsByUserId(userId)) {
-            throw new RuntimeException("이미 시터로 등록되어 있습니다.");
+            throw new ApiException(ResponseCode.ALREADY_REGISTER_SITTER);
         }
 
         sitterRepository.insertOnlySitter(request.getUserNumber(), request.getMinChildAge(),
@@ -127,7 +128,7 @@ public class UserService {
 
         //TODO 에러 정의하기
         if (parentRepository.existsByUserId(userId)) {
-            throw new RuntimeException("이미 부모로 등록되어 있습니다.");
+            throw new ApiException(ResponseCode.ALREADY_REGISTER_PARENT);
         }
 
         String children;
@@ -145,7 +146,7 @@ public class UserService {
     public void updateSitter(UpdateSitterRequest request, String userId) {
 
         SitterUser sitter = Optional.ofNullable(sitterRepository.findByUserId(userId))
-                .orElseThrow(() -> new RuntimeException("시터 정보가 존재하지 않습니다."));
+                .orElseThrow(() -> new ApiException(ResponseCode.SITTER_INFO_NOT_FOUND));
 
         if(request.getPassword() != null) {
             request.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -159,7 +160,7 @@ public class UserService {
     public void updateParent(UpdateParentRequest request, String userId) {
 
         ParentUser parent = Optional.ofNullable(parentRepository.findByUserId(userId))
-                .orElseThrow(() -> new RuntimeException("부모 정보가 존재하지 않습니다."));
+                .orElseThrow(() -> new ApiException(ResponseCode.PARENT_INFO_NOT_FOUND));
 
         if(request.getPassword() != null) {
             request.setPassword(passwordEncoder.encode(request.getPassword()));

@@ -24,11 +24,11 @@ public class GlobalExceptionHandler {
                 .build());
     }
 
-    @ExceptionHandler(DuplicateUserIdException.class)
-    public ResponseEntity<CommonResponse> handleDuplicateUserIdError(DuplicateUserIdException e) {
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<CommonResponse> handleApiException(ApiException e) {
         return ResponseEntity.ok(CommonResponse.builder()
-                .code(ResponseCode.DUPLICATE_USER_ID.getCode())
-                .message(e.getMessage())
+                .code(e.getResponseCode().getCode())
+                .message(e.getResponseCode().getMessage())
                 .build());
     }
 
