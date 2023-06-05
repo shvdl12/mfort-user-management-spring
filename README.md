@@ -1,6 +1,7 @@
 # Momsitter User Management Server
 
 아래와 같은 사용자 관리 API를 제공한다
+
 - 시티/부모 회원가입
 - 사용자 인증 및 토큰 발급
 - 회원 정보 조회
@@ -9,11 +10,11 @@
 - 시터로도 활동하기
 
 ## 개발 환경
+
 * Java 8
 * Gradle 7.4
 * Spring boot 2.6.8
 * MariaDB 10.8.3
-
 
 ## 라이브러리
 
@@ -40,7 +41,9 @@
 ```
 
 ## 데이터베이스
+
 공통 회원 테이블
+
 ```sql
 CREATE TABLE TB_USER (
 	USER_NUMBER INT PRIMARY KEY AUTO_INCREMENT,
@@ -53,7 +56,9 @@ CREATE TABLE TB_USER (
 	CREATED_AT DATETIME NOT NULL
 )
 ```
+
 시터 회원 테이블
+
 ```sql
 CREATE TABLE TB_SITTER (
 	USER_NUMBER INT PRIMARY KEY, 
@@ -65,7 +70,9 @@ CREATE TABLE TB_SITTER (
 	FOREIGN KEY (USER_NUMBER) REFERENCES TB_USER(USER_NUMBER)
 );
 ```
+
 부모 회 테이블
+
 ```sql
 CREATE TABLE TB_PARENT (
 	USER_NUMBER INT PRIMARY KEY,

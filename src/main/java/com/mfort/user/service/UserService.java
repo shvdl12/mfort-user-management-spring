@@ -148,7 +148,7 @@ public class UserService {
         SitterUser sitter = Optional.ofNullable(sitterRepository.findByUserId(userId))
                 .orElseThrow(() -> new ApiException(ResponseCode.SITTER_INFO_NOT_FOUND));
 
-        if(request.getPassword() != null) {
+        if (request.getPassword() != null) {
             request.setPassword(passwordEncoder.encode(request.getPassword()));
         }
 
@@ -162,7 +162,7 @@ public class UserService {
         ParentUser parent = Optional.ofNullable(parentRepository.findByUserId(userId))
                 .orElseThrow(() -> new ApiException(ResponseCode.PARENT_INFO_NOT_FOUND));
 
-        if(request.getPassword() != null) {
+        if (request.getPassword() != null) {
             request.setPassword(passwordEncoder.encode(request.getPassword()));
         }
 

@@ -82,7 +82,7 @@ public class UserController {
 
     @PostMapping("/update/sitter")
     public ResponseEntity<CommonResponse> updateSitter(@Valid @RequestBody UpdateSitterRequest request
-        , @AuthenticationPrincipal UserDetails userDetails) {
+            , @AuthenticationPrincipal UserDetails userDetails) {
 
         userService.updateSitter(request, userDetails.getUsername());
 

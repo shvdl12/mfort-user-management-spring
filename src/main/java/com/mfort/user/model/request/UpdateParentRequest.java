@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.sql.Update;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter

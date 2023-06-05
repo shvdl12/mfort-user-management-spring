@@ -1,7 +1,6 @@
 package com.mfort.user.common.annotation;
 
 
-import com.mfort.user.common.annotation.validator.GenderValidator;
 import com.mfort.user.common.annotation.validator.PasswordValidator;
 
 import javax.validation.Constraint;

@@ -1,12 +1,12 @@
 package com.mfort.user.model.domain;
 
 import com.mfort.user.model.request.UpdateParentRequest;
-import com.mfort.user.model.request.UpdateSitterRequest;
 import com.mfort.user.model.vo.Children;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;

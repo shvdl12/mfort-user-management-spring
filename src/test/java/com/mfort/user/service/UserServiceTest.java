@@ -1,11 +1,10 @@
 package com.mfort.user.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.SitterUser;
+import com.mfort.user.model.request.ParentSignUpRequest;
 import com.mfort.user.model.request.RegisterParentRequest;
 import com.mfort.user.model.request.RegisterSitterRequest;
-import com.mfort.user.model.request.ParentSignUpRequest;
 import com.mfort.user.model.request.SitterSignUpRequest;
 import com.mfort.user.model.response.UserInfoResponse;
 import com.mfort.user.model.vo.Children;
