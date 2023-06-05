@@ -2,7 +2,6 @@ package com.mfort.user.jwt;
 
 import com.mfort.user.common.model.ResponseCode;
 import com.mfort.user.exception.ApiException;
-import com.mfort.user.jwt.model.JwtToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.mfort.user.service;
 
-import com.mfort.user.jwt.model.JwtToken;
+import com.mfort.user.jwt.JwtToken;
 import com.mfort.user.model.request.SitterSignUpRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

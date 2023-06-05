@@ -1,4 +1,4 @@
-package com.mfort.user.jwt.model;
+package com.mfort.user.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

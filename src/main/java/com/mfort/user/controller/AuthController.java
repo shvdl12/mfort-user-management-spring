@@ -1,8 +1,6 @@
 package com.mfort.user.controller;
 
-import com.mfort.user.common.model.CommonResponse;
-import com.mfort.user.common.model.ResponseCode;
-import com.mfort.user.jwt.model.JwtToken;
+import com.mfort.user.jwt.JwtToken;
 import com.mfort.user.model.request.LoginRequest;
 import com.mfort.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
