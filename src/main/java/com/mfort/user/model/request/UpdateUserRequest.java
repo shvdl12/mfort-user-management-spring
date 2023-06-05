@@ -1,7 +1,5 @@
 package com.mfort.user.model.request;
 
-import com.mfort.user.common.annotation.Gender;
-import com.mfort.user.common.annotation.Password;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,17 +14,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class SignUpRequest {
-    @NotEmpty(message = "이름을 입력해주세요.")
+public class UpdateUserRequest {
+    private Integer userNumber;
     private String name;
-    @NotNull(message = "생일을 입력해주세요.")
     private LocalDate birthAt;
-    @Gender
     private String gender;
-    @NotEmpty(message = "아이디를 입력해주세요.")
-    private String userId;
-    @Password
     private String password;
-    @Email(message = "비밀번호를 입력해주세요.")
     private String email;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

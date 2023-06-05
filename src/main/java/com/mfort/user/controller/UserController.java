@@ -2,10 +2,7 @@ package com.mfort.user.controller;
 
 import com.mfort.user.common.model.CommonResponse;
 import com.mfort.user.common.model.ResponseCode;
-import com.mfort.user.model.request.RegisterParentRequest;
-import com.mfort.user.model.request.RegisterSitterRequest;
-import com.mfort.user.model.request.ParentSignUpRequest;
-import com.mfort.user.model.request.SitterSignUpRequest;
+import com.mfort.user.model.request.*;
 import com.mfort.user.model.response.UserInfoResponse;
 import com.mfort.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +72,32 @@ public class UserController {
             , @AuthenticationPrincipal UserDetails userDetails) {
 
         userService.registerParent(request, userDetails.getUsername());
+
+        CommonResponse response = CommonResponse.builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/update/sitter")
+    public ResponseEntity<CommonResponse> updateSitter(@Valid @RequestBody UpdateSitterRequest request
+        , @AuthenticationPrincipal UserDetails userDetails) {
+
+        userService.updateSitter(request, userDetails.getUsername());
+
+        CommonResponse response = CommonResponse.builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/update/parent")
+    public ResponseEntity<CommonResponse> updateParent(@Valid @RequestBody UpdateParentRequest request
+            , @AuthenticationPrincipal UserDetails userDetails) {
+
+        userService.updateParent(request, userDetails.getUsername());
 
         CommonResponse response = CommonResponse.builder()
                 .code(ResponseCode.SUCCESS.getCode())

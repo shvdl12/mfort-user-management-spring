@@ -41,7 +41,7 @@ public class AuthServiceTest {
 
         userService.signUpSitter(sut);
 
-        JwtToken token = authService.getToken(userId, "password");
+        JwtToken token = authService.getToken("test001", "password");
 
         assertThat(token).isNotNull();
         assertThat(token.getAccessToken()).isNotNull();

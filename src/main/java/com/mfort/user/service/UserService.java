@@ -1,26 +1,25 @@
 package com.mfort.user.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfort.user.exception.DuplicateUserIdException;
 import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.SitterUser;
 import com.mfort.user.model.domain.User;
-import com.mfort.user.model.request.RegisterParentRequest;
-import com.mfort.user.model.request.RegisterSitterRequest;
-import com.mfort.user.model.request.ParentSignUpRequest;
-import com.mfort.user.model.request.SitterSignUpRequest;
+import com.mfort.user.model.request.*;
 import com.mfort.user.model.response.UserInfoResponse;
 import com.mfort.user.repository.ParentRepository;
 import com.mfort.user.repository.SitterRepository;
 import com.mfort.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -114,7 +113,8 @@ public class UserService {
     @Transactional
     public void registerSitter(RegisterSitterRequest request, String userId) {
 
-        if(sitterRepository.existsByUserId(userId)){
+        //TODO 에러 정의하기
+        if (sitterRepository.existsByUserId(userId)) {
             throw new RuntimeException("이미 시터로 등록되어 있습니다.");
         }
 
@@ -125,7 +125,8 @@ public class UserService {
     @Transactional
     public void registerParent(RegisterParentRequest request, String userId) {
 
-        if(parentRepository.existsByUserId(userId)){
+        //TODO 에러 정의하기
+        if (parentRepository.existsByUserId(userId)) {
             throw new RuntimeException("이미 부모로 등록되어 있습니다.");
         }
 
@@ -139,5 +140,33 @@ public class UserService {
 
         parentRepository.insertOnlyParent(request.getUserNumber(), children,
                 request.getRequirements(), LocalDateTime.now());
+    }
+
+    public void updateSitter(UpdateSitterRequest request, String userId) {
+
+        SitterUser sitter = Optional.ofNullable(sitterRepository.findByUserId(userId))
+                .orElseThrow(() -> new RuntimeException("시터 정보가 존재하지 않습니다."));
+
+        if(request.getPassword() != null) {
+            request.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        sitter.updateSitter(request);
+
+        sitterRepository.save(sitter);
+    }
+
+    public void updateParent(UpdateParentRequest request, String userId) {
+
+        ParentUser parent = Optional.ofNullable(parentRepository.findByUserId(userId))
+                .orElseThrow(() -> new RuntimeException("부모 정보가 존재하지 않습니다."));
+
+        if(request.getPassword() != null) {
+            request.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        parent.updateParent(request);
+
+        parentRepository.save(parent);
     }
 }

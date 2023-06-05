@@ -1,11 +1,12 @@
 package com.mfort.user.model.domain;
 
+import com.mfort.user.model.request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,7 +24,7 @@ import java.util.Collections;
 @Getter
 @ToString
 @SuperBuilder
-@DynamicInsert
+@DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -41,6 +42,23 @@ public class User implements UserDetails {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    public void updateUser(UpdateUserRequest request) {
+        if (request.getName() != null) {
+            this.name = request.getName();
+        }
+        if (request.getBirthAt() != null) {
+            this.birthAt = request.getBirthAt();
+        }
+        if (request.getGender() != null) {
+            this.gender = request.getGender();
+        }
+        if (request.getEmail() != null) {
+            this.email = request.getEmail();
+        }
+        if (request.getPassword() != null) {
+            this.password = request.getPassword();
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
