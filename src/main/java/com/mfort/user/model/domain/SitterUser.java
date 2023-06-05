@@ -19,11 +19,11 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_SITTER")
 @Getter
-@Setter
 @SuperBuilder
 @DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
+@PrimaryKeyJoinColumn(name = "userNumber")
 @EntityListeners(AuditingEntityListener.class)
 @PrimaryKeyJoinColumn(name = "userNumber")
 public class SitterUser extends User {

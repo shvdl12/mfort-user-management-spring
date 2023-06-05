@@ -22,7 +22,6 @@ import java.util.Collections;
 @Entity
 @Table(name = "TB_USER")
 @Getter
-@ToString
 @SuperBuilder
 @DynamicUpdate
 @NoArgsConstructor

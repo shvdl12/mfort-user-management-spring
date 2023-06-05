@@ -21,9 +21,7 @@ import java.util.List;
 @Table(name = "TB_PARENT")
 @TypeDef(name = "json", typeClass = JsonType.class)
 @Getter
-@Setter
 @SuperBuilder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
