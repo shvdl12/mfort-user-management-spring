@@ -1,6 +1,6 @@
 # Momsitter User Management Server
 
-아래와 같은 사용자 관리 API를 제공한다
+아래와 같은 사용자 관리 API를 제공합니다
 
 - 시티/부모 회원가입
 - 사용자 인증 및 토큰 발급
