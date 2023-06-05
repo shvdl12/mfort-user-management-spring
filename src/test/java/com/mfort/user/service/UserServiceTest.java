@@ -34,11 +34,13 @@ public class UserServiceTest {
     @Test
     public void save_sitter_correctly_save() {
 
+        String userId = "user" + System.currentTimeMillis();
+
         SitterSignUpRequest sut = SitterSignUpRequest.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
-                .userId("test001")
+                .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
                 .minChildAge(3)
@@ -48,12 +50,12 @@ public class UserServiceTest {
 
         userService.signUpSitter(sut);
 
-        SitterUser sitterUser = userService.getSitter("test001");
+        SitterUser sitterUser = userService.getSitter(userId);
 
         assertThat(sitterUser.getName()).isEqualTo("홍길동");
         assertThat(sitterUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
         assertThat(sitterUser.getGender()).isEqualTo("Mail");
-        assertThat(sitterUser.getUserId()).isEqualTo("test001");
+        assertThat(sitterUser.getUserId()).isEqualTo(userId);
         assertThat(passwordEncoder.matches("password", sitterUser.getPassword())).isEqualTo(true);
         assertThat(sitterUser.getEmail()).isEqualTo("test001@gmail.com");
         assertThat(sitterUser.getMinChildAge()).isEqualTo(3);
@@ -65,6 +67,8 @@ public class UserServiceTest {
     @Test
     public void save_parent_correctly_save() {
 
+        String userId = "user" + System.currentTimeMillis();
+
         List<Children> sutChildren = Arrays.asList(
                 new Children(LocalDate.of(2010, 1, 1), "Mail"),
                 new Children(LocalDate.of(2011, 1, 1), "Femail")
@@ -74,7 +78,7 @@ public class UserServiceTest {
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
-                .userId("test001")
+                .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
                 .children(sutChildren)
@@ -83,12 +87,12 @@ public class UserServiceTest {
 
         userService.signUpParent(sut);
 
-        ParentUser parentUser = userService.getParent("test001");
+        ParentUser parentUser = userService.getParent(userId);
 
         assertThat(parentUser.getName()).isEqualTo("홍길동");
         assertThat(parentUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
         assertThat(parentUser.getGender()).isEqualTo("Mail");
-        assertThat(parentUser.getUserId()).isEqualTo("test001");
+        assertThat(parentUser.getUserId()).isEqualTo(userId);
         assertThat(passwordEncoder.matches("password", parentUser.getPassword())).isEqualTo(true);
         assertThat(parentUser.getEmail()).isEqualTo("test001@gmail.com");
         assertThat(parentUser.getRequirements()).isEqualTo("요구사항");
@@ -104,11 +108,14 @@ public class UserServiceTest {
 
     @Test
     public void get_user_detail_sitter() {
+
+        String userId = "user" + System.currentTimeMillis();
+
         SitterSignUpRequest sut = SitterSignUpRequest.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
-                .userId("test001")
+                .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
                 .minChildAge(3)
@@ -118,7 +125,7 @@ public class UserServiceTest {
 
         userService.signUpSitter(sut);
 
-        UserInfoResponse user = userService.getUserDetail("test001");
+        UserInfoResponse user = userService.getUserDetail(userId);
 
         assertThat(user.getName()).isEqualTo("홍길동");
         assertThat(user.getMinChildAge()).isEqualTo(3);
@@ -128,6 +135,9 @@ public class UserServiceTest {
 
     @Test
     public void get_user_detail_parent() {
+
+        String userId = "user" + System.currentTimeMillis();
+
         List<Children> sutChildren = Arrays.asList(
                 new Children(LocalDate.of(2010, 1, 1), "Mail"),
                 new Children(LocalDate.of(2011, 1, 1), "Femail")
@@ -137,7 +147,7 @@ public class UserServiceTest {
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
-                .userId("test001")
+                .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
                 .children(sutChildren)
@@ -146,7 +156,7 @@ public class UserServiceTest {
 
         userService.signUpParent(sut);
 
-        UserInfoResponse user = userService.getUserDetail("test001");
+        UserInfoResponse user = userService.getUserDetail(userId);
 
         assertThat(user.getName()).isEqualTo("홍길동");
         assertThat(user.getRequirements()).isEqualTo("요구사항");
@@ -158,6 +168,9 @@ public class UserServiceTest {
 
     @Test
     public void register_sitter() {
+
+        String userId = "user" + System.currentTimeMillis();
+
         List<Children> sutChildren = Arrays.asList(
                 new Children(LocalDate.of(2010, 1, 1), "Mail"),
                 new Children(LocalDate.of(2011, 1, 1), "Femail")
@@ -167,7 +180,7 @@ public class UserServiceTest {
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
-                .userId("test001")
+                .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
                 .children(sutChildren)
@@ -183,17 +196,19 @@ public class UserServiceTest {
                 .bio("자기소개")
                 .build();
 
-        userService.registerSitter(request, "test001");
+        userService.registerSitter(request, userId);
     }
 
     @Test
     public void register_parent() {
 
+        String userId = "user" + System.currentTimeMillis();
+
         SitterSignUpRequest sut = SitterSignUpRequest.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
-                .userId("test002")
+                .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
                 .minChildAge(3)
@@ -214,6 +229,6 @@ public class UserServiceTest {
                 .requirements("요구사항")
                 .build();
 
-        userService.registerParent(request, "test002");
+        userService.registerParent(request, userId);
     }
 }

@@ -20,11 +20,13 @@ public class SitterUserRepositoryTest {
     @Test
     public void save_sitter_correctly_save() {
 
+        String userId = "user" + System.currentTimeMillis();
+
         SitterUser sut = SitterUser.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
                 .gender("Mail")
-                .userId("test001")
+                .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
                 .minChildAge(3)
@@ -34,12 +36,12 @@ public class SitterUserRepositoryTest {
 
         sitterRepository.save(sut);
 
-        SitterUser sitterUser = sitterRepository.findByUserId("test001");
+        SitterUser sitterUser = sitterRepository.findByUserId(userId);
 
         assertThat(sitterUser.getName()).isEqualTo("홍길동");
         assertThat(sitterUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
         assertThat(sitterUser.getGender()).isEqualTo("Mail");
-        assertThat(sitterUser.getUserId()).isEqualTo("test001");
+        assertThat(sitterUser.getUserId()).isEqualTo(userId);
         assertThat(sitterUser.getPassword()).isEqualTo("password");
         assertThat(sitterUser.getEmail()).isEqualTo("test001@gmail.com");
         assertThat(sitterUser.getMinChildAge()).isEqualTo(3);
