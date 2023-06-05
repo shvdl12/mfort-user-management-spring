@@ -11,7 +11,7 @@ public class GenderValidator implements ConstraintValidator<Gender, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return "Femail".equalsIgnoreCase(value) || "Male".equalsIgnoreCase(value);
+        return "Female".equalsIgnoreCase(value) || "Male".equalsIgnoreCase(value);
     }
 }
 

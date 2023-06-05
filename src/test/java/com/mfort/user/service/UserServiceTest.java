@@ -186,10 +186,9 @@ public class UserServiceTest {
                 .requirements("요구사항")
                 .build();
 
-        ParentUser parentUser = userService.signUpParent(sut);
+        userService.signUpParent(sut);
 
         RegisterSitterRequest request = RegisterSitterRequest.builder()
-                .userNumber(parentUser.getUserNumber())
                 .minChildAge(1)
                 .maxChildAge(2)
                 .bio("자기소개")
@@ -215,7 +214,7 @@ public class UserServiceTest {
                 .bio("자기소개")
                 .build();
 
-        SitterUser sitterUser = userService.signUpSitter(sut);
+        userService.signUpSitter(sut);
 
         List<Children> sutChildren = Arrays.asList(
                 new Children(LocalDate.of(2010, 1, 1), "Mail"),
@@ -223,7 +222,6 @@ public class UserServiceTest {
         );
 
         RegisterParentRequest request = RegisterParentRequest.builder()
-                .userNumber(sitterUser.getUserNumber())
                 .children(sutChildren)
                 .requirements("요구사항")
                 .build();

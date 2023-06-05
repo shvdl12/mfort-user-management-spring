@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class RegisterParentRequest {
-    private Integer userNumber;
     private List<Children> children;
     private String requirements;
 }

@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = GenderValidator.class)
 public @interface Gender {
-    String message() default "성별은 Femail, Male 중 하나 이여야 합니다.";
+    String message() default "성별은 Female, Male 중 하나 이여야 합니다.";
 
     Class[] groups() default {};
 

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RegisterSitterRequest {
-    private Integer userNumber;
     private Integer minChildAge;
     private Integer maxChildAge;
     private String bio;

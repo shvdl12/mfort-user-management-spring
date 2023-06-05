@@ -119,7 +119,9 @@ public class UserService {
             throw new ApiException(ResponseCode.ALREADY_REGISTER_SITTER);
         }
 
-        sitterRepository.insertOnlySitter(request.getUserNumber(), request.getMinChildAge(),
+        User user = userRepository.findByUserId(userId);
+
+        sitterRepository.insertOnlySitter(user.getUserNumber(), request.getMinChildAge(),
                 request.getMaxChildAge(), request.getBio(), LocalDateTime.now());
     }
 
@@ -139,7 +141,9 @@ public class UserService {
             throw new RuntimeException(e);
         }
 
-        parentRepository.insertOnlyParent(request.getUserNumber(), children,
+        User user = userRepository.findByUserId(userId);
+
+        parentRepository.insertOnlyParent(user.getUserNumber(), children,
                 request.getRequirements(), LocalDateTime.now());
     }
 

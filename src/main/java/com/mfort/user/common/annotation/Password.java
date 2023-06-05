@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface Password {
-    String message() default "비밀번호는 숫자, 문자, 특수 문자를 포함한 12자리 이상 이어야 합니다.";
+    String message() default "비밀번호는 숫자, 문자, 특수 문자를 포함한 8자리 이상 이어야 합니다.";
 
     Class[] groups() default {};
 
