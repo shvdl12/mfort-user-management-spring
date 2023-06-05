@@ -2,6 +2,8 @@ package com.mfort.user.controller;
 
 import com.mfort.user.common.model.CommonResponse;
 import com.mfort.user.common.model.ResponseCode;
+import com.mfort.user.model.request.RegisterParentRequest;
+import com.mfort.user.model.request.RegisterSitterRequest;
 import com.mfort.user.model.request.ParentSignUpRequest;
 import com.mfort.user.model.request.SitterSignUpRequest;
 import com.mfort.user.model.response.UserInfoResponse;
@@ -50,6 +52,32 @@ public class UserController {
         CommonResponse<UserInfoResponse> response = CommonResponse.<UserInfoResponse>builder()
                 .code(ResponseCode.SUCCESS.getCode())
                 .data(userService.getUserDetail(userDetails.getUsername()))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/register/sitter")
+    public ResponseEntity<CommonResponse> registerSitter(@Valid @RequestBody RegisterSitterRequest request
+            , @AuthenticationPrincipal UserDetails userDetails) {
+
+        userService.registerSitter(request, userDetails.getUsername());
+
+        CommonResponse response = CommonResponse.builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/register/parent")
+    public ResponseEntity<CommonResponse> registerParent(@Valid @RequestBody RegisterParentRequest request
+            , @AuthenticationPrincipal UserDetails userDetails) {
+
+        userService.registerParent(request, userDetails.getUsername());
+
+        CommonResponse response = CommonResponse.builder()
+                .code(ResponseCode.SUCCESS.getCode())
                 .build();
 
         return ResponseEntity.ok(response);

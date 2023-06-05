@@ -1,7 +1,10 @@
 package com.mfort.user.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.SitterUser;
+import com.mfort.user.model.request.RegisterParentRequest;
+import com.mfort.user.model.request.RegisterSitterRequest;
 import com.mfort.user.model.request.ParentSignUpRequest;
 import com.mfort.user.model.request.SitterSignUpRequest;
 import com.mfort.user.model.response.UserInfoResponse;
@@ -151,5 +154,66 @@ public class UserServiceTest {
         assertThat(user.getChildren().get(1).getBirthAt()).isEqualTo(LocalDate.of(2011, 1, 1));
         assertThat(user.getChildren().get(0).getGender()).isEqualTo("Mail");
         assertThat(user.getChildren().get(1).getGender()).isEqualTo("Femail");
+    }
+
+    @Test
+    public void register_sitter() {
+        List<Children> sutChildren = Arrays.asList(
+                new Children(LocalDate.of(2010, 1, 1), "Mail"),
+                new Children(LocalDate.of(2011, 1, 1), "Femail")
+        );
+
+        ParentSignUpRequest sut = ParentSignUpRequest.builder()
+                .name("홍길동")
+                .birthAt(LocalDate.of(1990, 1, 1))
+                .gender("Mail")
+                .userId("test001")
+                .password("password")
+                .email("test001@gmail.com")
+                .children(sutChildren)
+                .requirements("요구사항")
+                .build();
+
+        ParentUser parentUser = userService.signUpParent(sut);
+
+        RegisterSitterRequest request = RegisterSitterRequest.builder()
+                .userNumber(parentUser.getUserNumber())
+                .minChildAge(1)
+                .maxChildAge(2)
+                .bio("자기소개")
+                .build();
+
+        userService.registerSitter(request, "test001");
+    }
+
+    @Test
+    public void register_parent() {
+
+        SitterSignUpRequest sut = SitterSignUpRequest.builder()
+                .name("홍길동")
+                .birthAt(LocalDate.of(1990, 1, 1))
+                .gender("Mail")
+                .userId("test002")
+                .password("password")
+                .email("test001@gmail.com")
+                .minChildAge(3)
+                .maxChildAge(5)
+                .bio("자기소개")
+                .build();
+
+        SitterUser sitterUser = userService.signUpSitter(sut);
+
+        List<Children> sutChildren = Arrays.asList(
+                new Children(LocalDate.of(2010, 1, 1), "Mail"),
+                new Children(LocalDate.of(2011, 1, 1), "Femail")
+        );
+
+        RegisterParentRequest request = RegisterParentRequest.builder()
+                .userNumber(sitterUser.getUserNumber())
+                .children(sutChildren)
+                .requirements("요구사항")
+                .build();
+
+        userService.registerParent(request, "test002");
     }
 }

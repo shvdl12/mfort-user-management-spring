@@ -7,14 +7,21 @@ spring:
     hikari:
       connection-test-query: SELECT 1
 
-    jpa:
-      properties:
-        hibernate:
-          format_sql: true
-          implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-          physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-      open-in-view: false
-      show-sql: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    open-in-view: false
 
-  jwt:
-    secret: secret
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:

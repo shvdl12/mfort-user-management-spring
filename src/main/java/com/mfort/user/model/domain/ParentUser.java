@@ -7,15 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,7 +25,9 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
+@PrimaryKeyJoinColumn(name = "userNumber")
 public class ParentUser extends User {
     @Type(type = "json")
     @Column(name = "children", columnDefinition = "longtext")
