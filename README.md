@@ -71,7 +71,7 @@ CREATE TABLE TB_SITTER (
 );
 ```
 
-부모 회 테이블
+부모 회원 테이블
 
 ```sql
 CREATE TABLE TB_PARENT (
