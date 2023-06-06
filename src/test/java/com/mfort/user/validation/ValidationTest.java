@@ -1,4 +1,4 @@
-package com.mfort.user;
+package com.mfort.user.validation;
 
 import org.junit.jupiter.api.Test;
 

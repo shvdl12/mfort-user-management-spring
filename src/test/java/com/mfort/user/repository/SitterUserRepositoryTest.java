@@ -1,5 +1,6 @@
 package com.mfort.user.repository;
 
+import com.mfort.user.utils.TestUtils;
 import com.mfort.user.model.domain.SitterUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,18 @@ public class SitterUserRepositoryTest {
 
     @Autowired
     private SitterRepository sitterRepository;
+    @Autowired
+    private TestUtils testUtils;
 
     @Test
     public void save_sitter_correctly_save() {
 
-        String userId = "user" + System.currentTimeMillis();
+        String userId = testUtils.getRandomUserId();
 
         SitterUser sut = SitterUser.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
-                .gender("Mail")
+                .gender("Male")
                 .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")
@@ -40,7 +43,7 @@ public class SitterUserRepositoryTest {
 
         assertThat(sitterUser.getName()).isEqualTo("홍길동");
         assertThat(sitterUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
-        assertThat(sitterUser.getGender()).isEqualTo("Mail");
+        assertThat(sitterUser.getGender()).isEqualTo("Male");
         assertThat(sitterUser.getUserId()).isEqualTo(userId);
         assertThat(sitterUser.getPassword()).isEqualTo("password");
         assertThat(sitterUser.getEmail()).isEqualTo("test001@gmail.com");

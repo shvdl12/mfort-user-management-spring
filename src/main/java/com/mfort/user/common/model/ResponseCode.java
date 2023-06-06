@@ -6,8 +6,8 @@ public enum ResponseCode {
     INVALID_ACCESS_TOKEN("1000", "invalid parameter"),
     INVALID_PARAMETER("1001", "invalid parameter"),
     DUPLICATE_USER_ID("1002", "duplicate user id"),
-    ALREADY_REGISTER_SITTER("1003", "invalid parameter"),
-    ALREADY_REGISTER_PARENT("1004", "invalid parameter"),
+    ALREADY_REGISTERED_SITTER("1003", "invalid parameter"),
+    ALREADY_REGISTERED_PARENT("1004", "invalid parameter"),
     SITTER_INFO_NOT_FOUND("1005", "invalid parameter"),
     PARENT_INFO_NOT_FOUND("1006", "invalid parameter"),
     INTERNAL_SERVER_ERROR("9999", "internal server error");

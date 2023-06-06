@@ -116,7 +116,7 @@ public class UserService {
 
         //TODO 에러 정의하기
         if (sitterRepository.existsByUserId(userId)) {
-            throw new ApiException(ResponseCode.ALREADY_REGISTER_SITTER);
+            throw new ApiException(ResponseCode.ALREADY_REGISTERED_SITTER);
         }
 
         User user = userRepository.findByUserId(userId);
@@ -130,7 +130,7 @@ public class UserService {
 
         //TODO 에러 정의하기
         if (parentRepository.existsByUserId(userId)) {
-            throw new ApiException(ResponseCode.ALREADY_REGISTER_PARENT);
+            throw new ApiException(ResponseCode.ALREADY_REGISTERED_PARENT);
         }
 
         String children;
@@ -147,7 +147,7 @@ public class UserService {
                 request.getRequirements(), LocalDateTime.now());
     }
 
-    public void updateSitter(UpdateSitterRequest request, String userId) {
+    public UserInfoResponse updateSitter(UpdateSitterRequest request, String userId) {
 
         SitterUser sitter = Optional.ofNullable(sitterRepository.findByUserId(userId))
                 .orElseThrow(() -> new ApiException(ResponseCode.SITTER_INFO_NOT_FOUND));
@@ -158,10 +158,25 @@ public class UserService {
 
         sitter.updateSitter(request);
 
-        sitterRepository.save(sitter);
+        SitterUser result = sitterRepository.save(sitter);
+
+        UserInfoResponse response = new UserInfoResponse();
+
+        response.setUserNumber(result.getUserNumber());
+        response.setName(result.getName());
+        response.setBirthAt(result.getBirthAt());
+        response.setGender(result.getGender());
+        response.setUserId(result.getUserId());
+        response.setEmail(result.getEmail());
+
+        response.setMinChildAge(result.getMinChildAge());
+        response.setMaxChildAge(result.getMaxChildAge());
+        response.setBio(result.getBio());
+
+        return response;
     }
 
-    public void updateParent(UpdateParentRequest request, String userId) {
+    public UserInfoResponse updateParent(UpdateParentRequest request, String userId) {
 
         ParentUser parent = Optional.ofNullable(parentRepository.findByUserId(userId))
                 .orElseThrow(() -> new ApiException(ResponseCode.PARENT_INFO_NOT_FOUND));
@@ -172,6 +187,20 @@ public class UserService {
 
         parent.updateParent(request);
 
-        parentRepository.save(parent);
+        ParentUser result = parentRepository.save(parent);
+
+        UserInfoResponse response = new UserInfoResponse();
+
+        response.setUserNumber(result.getUserNumber());
+        response.setName(result.getName());
+        response.setBirthAt(result.getBirthAt());
+        response.setGender(result.getGender());
+        response.setUserId(result.getUserId());
+        response.setEmail(result.getEmail());
+
+        response.setChildren(result.getChildren());
+        response.setRequirements(result.getRequirements());
+
+        return response;
     }
 }

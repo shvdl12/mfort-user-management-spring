@@ -1,5 +1,6 @@
 package com.mfort.user.service;
 
+import com.mfort.user.utils.TestUtils;
 import com.mfort.user.jwt.JwtToken;
 import com.mfort.user.model.request.SitterSignUpRequest;
 import org.junit.jupiter.api.Test;
@@ -17,20 +18,21 @@ public class AuthServiceTest {
 
     @Autowired
     private AuthService authService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    TestUtils testUtils;
 
 
     @Test
     public void get_token() {
 
-        String userId = "user" + System.currentTimeMillis();
+        String userId = testUtils.getRandomUserId();
 
         SitterSignUpRequest sut = SitterSignUpRequest.builder()
                 .name("홍길동")
                 .birthAt(LocalDate.of(1990, 1, 1))
-                .gender("Mail")
+                .gender("Male")
                 .userId(userId)
                 .password("password")
                 .email("test001@gmail.com")

@@ -1,6 +1,6 @@
 package com.mfort.user.model.request;
 
-import com.mfort.user.model.vo.Children;
+import com.mfort.user.model.vo.Child;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 public class UpdateParentRequest extends UpdateUserRequest {
-    private List<Children> children;
+    private List<Child> children;
     private String requirements;
 }

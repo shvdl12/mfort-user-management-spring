@@ -2,7 +2,7 @@ package com.mfort.user.model.response;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mfort.user.model.vo.Children;
+import com.mfort.user.model.vo.Child;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +26,6 @@ public class UserInfoResponse {
     private Integer maxChildAge;
     private String bio;
 
-    private List<Children> children;
+    private List<Child> children;
     private String requirements;
 }

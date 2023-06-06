@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 @ToString
 @AllArgsConstructor
-public class Children {
+public class Child {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

@@ -21,12 +21,15 @@ public class SignUpRequest {
     private String name;
     @NotNull(message = "생일을 입력해주세요.")
     private LocalDate birthAt;
+    @NotNull(message = "성별을 입력해주세요.")
     @Gender
     private String gender;
     @NotEmpty(message = "아이디를 입력해주세요.")
     private String userId;
+    @NotNull(message = "비밀번호를 입력해주세요.")
     @Password
     private String password;
-    @Email(message = "비밀번호를 입력해주세요.")
+    @NotNull(message = "이메일을 입력해주세요.")
+    @Email(message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 }

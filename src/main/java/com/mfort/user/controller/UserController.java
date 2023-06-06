@@ -81,26 +81,28 @@ public class UserController {
     }
 
     @PostMapping("/update/sitter")
-    public ResponseEntity<CommonResponse> updateSitter(@Valid @RequestBody UpdateSitterRequest request
+    public ResponseEntity<CommonResponse<UserInfoResponse>> updateSitter(@Valid @RequestBody UpdateSitterRequest request
             , @AuthenticationPrincipal UserDetails userDetails) {
 
-        userService.updateSitter(request, userDetails.getUsername());
+        UserInfoResponse userInfoResponse = userService.updateSitter(request, userDetails.getUsername());
 
         CommonResponse response = CommonResponse.builder()
                 .code(ResponseCode.SUCCESS.getCode())
+                .data(userInfoResponse)
                 .build();
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/update/parent")
-    public ResponseEntity<CommonResponse> updateParent(@Valid @RequestBody UpdateParentRequest request
+    public ResponseEntity<CommonResponse<UserInfoResponse>> updateParent(@Valid @RequestBody UpdateParentRequest request
             , @AuthenticationPrincipal UserDetails userDetails) {
 
-        userService.updateParent(request, userDetails.getUsername());
+        UserInfoResponse userInfoResponse = userService.updateParent(request, userDetails.getUsername());
 
         CommonResponse response = CommonResponse.builder()
                 .code(ResponseCode.SUCCESS.getCode())
+                .data(userInfoResponse)
                 .build();
 
         return ResponseEntity.ok(response);

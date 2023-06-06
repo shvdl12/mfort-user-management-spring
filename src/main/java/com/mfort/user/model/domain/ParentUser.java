@@ -1,7 +1,7 @@
 package com.mfort.user.model.domain;
 
 import com.mfort.user.model.request.UpdateParentRequest;
-import com.mfort.user.model.vo.Children;
+import com.mfort.user.model.vo.Child;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +30,7 @@ import java.util.List;
 public class ParentUser extends User {
     @Type(type = "json")
     @Column(name = "children", columnDefinition = "longtext")
-    private List<Children> children;
+    private List<Child> children;
     private String requirements;
     @CreatedDate
     private LocalDateTime parentCreatedAt;

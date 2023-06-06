@@ -1,11 +1,12 @@
 package com.mfort.user.model.request;
 
-import com.mfort.user.model.vo.Children;
+import com.mfort.user.model.vo.Child;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class RegisterParentRequest {
-    private List<Children> children;
+    @NotEmpty(message = "아이 정보를 입력해주세요.")
+    private List<Child> children;
     private String requirements;
 }
