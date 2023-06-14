@@ -1,5 +1,6 @@
 package com.mfort.user.service;
 
+import com.mfort.user.model.domain.User;
 import com.mfort.user.utils.TestUtils;
 import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.SitterUser;
@@ -51,17 +52,18 @@ public class UserServiceTest {
         userService.signUpSitter(sut);
 
         SitterUser sitterUser = userService.getSitter(userId);
+        User user = sitterUser.getUser();
 
-        assertThat(sitterUser.getName()).isEqualTo("홍길동");
-        assertThat(sitterUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
-        assertThat(sitterUser.getGender()).isEqualTo("Male");
-        assertThat(sitterUser.getUserId()).isEqualTo(userId);
-        assertThat(passwordEncoder.matches("password", sitterUser.getPassword())).isEqualTo(true);
-        assertThat(sitterUser.getEmail()).isEqualTo("test001@gmail.com");
+        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
+        assertThat(user.getGender()).isEqualTo("Male");
+        assertThat(user.getUserId()).isEqualTo(userId);
+        assertThat(passwordEncoder.matches("password", user.getPassword())).isEqualTo(true);
+        assertThat(user.getEmail()).isEqualTo("test001@gmail.com");
         assertThat(sitterUser.getMinChildAge()).isEqualTo(3);
         assertThat(sitterUser.getMaxChildAge()).isEqualTo(5);
         assertThat(sitterUser.getBio()).isEqualTo("자기소개");
-        assertThat(sitterUser.getCreatedAt()).isNotNull();
+        assertThat(user.getCreatedAt()).isNotNull();
     }
 
     @Test
@@ -83,13 +85,14 @@ public class UserServiceTest {
         userService.signUpParent(sut);
 
         ParentUser parentUser = userService.getParent(userId);
+        User user = parentUser.getUser();
 
-        assertThat(parentUser.getName()).isEqualTo("홍길동");
-        assertThat(parentUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
-        assertThat(parentUser.getGender()).isEqualTo("Male");
-        assertThat(parentUser.getUserId()).isEqualTo(userId);
-        assertThat(passwordEncoder.matches("password", parentUser.getPassword())).isEqualTo(true);
-        assertThat(parentUser.getEmail()).isEqualTo("test001@gmail.com");
+        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
+        assertThat(user.getGender()).isEqualTo("Male");
+        assertThat(user.getUserId()).isEqualTo(userId);
+        assertThat(passwordEncoder.matches("password", user.getPassword())).isEqualTo(true);
+        assertThat(user.getEmail()).isEqualTo("test001@gmail.com");
         assertThat(parentUser.getRequirements()).isEqualTo("요구사항");
 
         List<Child> children = parentUser.getChildren();

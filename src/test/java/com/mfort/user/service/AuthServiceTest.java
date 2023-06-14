@@ -1,5 +1,7 @@
 package com.mfort.user.service;
 
+import com.mfort.user.service.AuthService;
+import com.mfort.user.service.UserService;
 import com.mfort.user.utils.TestUtils;
 import com.mfort.user.jwt.JwtToken;
 import com.mfort.user.model.request.SitterSignUpRequest;

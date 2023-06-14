@@ -3,8 +3,8 @@ package com.mfort.user.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfort.user.common.model.ResponseCode;
 import com.mfort.user.exception.ApiException;
-import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.SitterUser;
+import com.mfort.user.model.domain.ParentUser;
 import com.mfort.user.model.domain.User;
 import com.mfort.user.model.request.*;
 import com.mfort.user.model.response.UserInfoResponse;
@@ -38,15 +38,19 @@ public class UserService {
             throw new ApiException(ResponseCode.DUPLICATE_USER_ID);
         }
 
-        SitterUser sitterUser = SitterUser.builder()
+        User user = User.builder()
                 .name(request.getName())
+                .email(request.getEmail())
                 .birthAt(request.getBirthAt())
                 .gender(request.getGender())
                 .userId(request.getUserId())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .build();
+
+        SitterUser sitterUser = SitterUser.builder()
+                .user(user)
                 .minChildAge(request.getMinChildAge())
                 .maxChildAge(request.getMaxChildAge())
-                .email(request.getEmail())
                 .bio(request.getBio())
                 .build();
 
@@ -59,13 +63,17 @@ public class UserService {
             throw new ApiException(ResponseCode.DUPLICATE_USER_ID);
         }
 
-        ParentUser parentUser = ParentUser.builder()
+        User user = User.builder()
                 .name(request.getName())
+                .email(request.getEmail())
                 .birthAt(request.getBirthAt())
                 .gender(request.getGender())
                 .userId(request.getUserId())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .email(request.getEmail())
+                .build();
+
+        ParentUser parentUser = ParentUser.builder()
+                .user(user)
                 .children(request.getChildren())
                 .requirements(request.getRequirements())
                 .build();
@@ -74,19 +82,19 @@ public class UserService {
     }
 
     public SitterUser getSitter(String userId) {
-        return sitterRepository.findByUserId(userId);
+        return sitterRepository.findByUserUserId(userId);
     }
 
     public ParentUser getParent(String userId) {
-        return parentRepository.findByUserId(userId);
+        return parentRepository.findByUserUserId(userId);
     }
 
     public UserInfoResponse getUserDetail(String userId) {
 
-        SitterUser sitter = sitterRepository.findByUserId(userId);
-        ParentUser parent = parentRepository.findByUserId(userId);
+        SitterUser sitter = sitterRepository.findByUserUserId(userId);
+        ParentUser parent = parentRepository.findByUserUserId(userId);
 
-        User user = sitter != null ? sitter : parent;
+        User user = (sitter != null) ? sitter.getUser() : (parent != null) ? parent.getUser() : null;
 
         UserInfoResponse response = new UserInfoResponse();
 
@@ -115,7 +123,7 @@ public class UserService {
     public void registerSitter(RegisterSitterRequest request, String userId) {
 
         //TODO 에러 정의하기
-        if (sitterRepository.existsByUserId(userId)) {
+        if (sitterRepository.existsByUserUserId(userId)) {
             throw new ApiException(ResponseCode.ALREADY_REGISTERED_SITTER);
         }
 
@@ -129,7 +137,7 @@ public class UserService {
     public void registerParent(RegisterParentRequest request, String userId) {
 
         //TODO 에러 정의하기
-        if (parentRepository.existsByUserId(userId)) {
+        if (parentRepository.existsByUserUserId(userId)) {
             throw new ApiException(ResponseCode.ALREADY_REGISTERED_PARENT);
         }
 
@@ -149,7 +157,7 @@ public class UserService {
 
     public UserInfoResponse updateSitter(UpdateSitterRequest request, String userId) {
 
-        SitterUser sitter = Optional.ofNullable(sitterRepository.findByUserId(userId))
+        SitterUser sitter = Optional.ofNullable(sitterRepository.findByUserUserId(userId))
                 .orElseThrow(() -> new ApiException(ResponseCode.SITTER_INFO_NOT_FOUND));
 
         if (request.getPassword() != null) {
@@ -162,12 +170,12 @@ public class UserService {
 
         UserInfoResponse response = new UserInfoResponse();
 
-        response.setUserNumber(result.getUserNumber());
-        response.setName(result.getName());
-        response.setBirthAt(result.getBirthAt());
-        response.setGender(result.getGender());
-        response.setUserId(result.getUserId());
-        response.setEmail(result.getEmail());
+        response.setUserNumber(result.getUser().getUserNumber());
+        response.setName(result.getUser().getName());
+        response.setBirthAt(result.getUser().getBirthAt());
+        response.setGender(result.getUser().getGender());
+        response.setUserId(result.getUser().getUserId());
+        response.setEmail(result.getUser().getEmail());
 
         response.setMinChildAge(result.getMinChildAge());
         response.setMaxChildAge(result.getMaxChildAge());
@@ -178,7 +186,7 @@ public class UserService {
 
     public UserInfoResponse updateParent(UpdateParentRequest request, String userId) {
 
-        ParentUser parent = Optional.ofNullable(parentRepository.findByUserId(userId))
+        ParentUser parent = Optional.ofNullable(parentRepository.findByUserUserId(userId))
                 .orElseThrow(() -> new ApiException(ResponseCode.PARENT_INFO_NOT_FOUND));
 
         if (request.getPassword() != null) {
@@ -191,12 +199,12 @@ public class UserService {
 
         UserInfoResponse response = new UserInfoResponse();
 
-        response.setUserNumber(result.getUserNumber());
-        response.setName(result.getName());
-        response.setBirthAt(result.getBirthAt());
-        response.setGender(result.getGender());
-        response.setUserId(result.getUserId());
-        response.setEmail(result.getEmail());
+        response.setUserNumber(result.getUser().getUserNumber());
+        response.setName(result.getUser().getName());
+        response.setBirthAt(result.getUser().getBirthAt());
+        response.setGender(result.getUser().getGender());
+        response.setUserId(result.getUser().getUserId());
+        response.setEmail(result.getUser().getEmail());
 
         response.setChildren(result.getChildren());
         response.setRequirements(result.getRequirements());

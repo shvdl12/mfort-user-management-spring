@@ -2,9 +2,9 @@ package com.mfort.user.model.domain;
 
 import com.mfort.user.model.request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,12 +21,11 @@ import java.util.Collections;
 @Entity
 @Table(name = "TB_USER")
 @Getter
-@SuperBuilder
+@Builder
 @DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +36,10 @@ public class User implements UserDetails {
     private String userId;
     private String password;
     private String email;
+
     @CreatedDate
     private LocalDateTime createdAt;
+
 
     public void updateUser(UpdateUserRequest request) {
         if (request.getName() != null) {

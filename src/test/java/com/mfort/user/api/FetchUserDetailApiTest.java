@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@Transactional
+//@Transactional
 public class FetchUserDetailApiTest {
     @Autowired
     private MockMvc mockMvc;
@@ -87,6 +87,38 @@ public class FetchUserDetailApiTest {
                     assertThat(res.getData().getUserId()).isEqualTo(userId);
                     assertThat(res.getData().getChildren()).hasSize(2);
                     assertThat(res.getData().getRequirements()).isEqualTo("요구사항");
+                });
+    }
+
+    @Test
+    public void fetch_all_info_detail() throws Exception {
+
+        String userId = testUtils.getRandomUserId();
+        String password = "qwer1234!";
+
+        testUtils.createParent(userId, password);
+        testUtils.registerSitter(userId);
+
+        String token = testUtils.getToken(userId, password);
+
+        mockMvc.perform(MockMvcRequestBuilders.get(path)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(result -> {
+                    MockHttpServletResponse response = result.getResponse();
+
+                    TypeReference<CommonResponse<UserInfoResponse>> typeRef
+                            = new TypeReference<CommonResponse<UserInfoResponse>>() {
+                    };
+
+                    CommonResponse<UserInfoResponse> res = objectMapper.readValue(response.getContentAsString(), typeRef);
+
+                    assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+                    assertThat(res.getCode()).isEqualTo(ResponseCode.SUCCESS.getCode());
+                    assertThat(res.getData().getUserId()).isEqualTo(userId);
+                    assertThat(res.getData().getChildren()).hasSize(2);
+                    assertThat(res.getData().getRequirements()).isEqualTo("요구사항");
+                    assertThat(res.getData().getMaxChildAge()).isEqualTo(5);
                 });
     }
 }

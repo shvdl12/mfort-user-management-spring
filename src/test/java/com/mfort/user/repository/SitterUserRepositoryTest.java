@@ -1,5 +1,6 @@
 package com.mfort.user.repository;
 
+import com.mfort.user.model.domain.User;
 import com.mfort.user.utils.TestUtils;
 import com.mfort.user.model.domain.SitterUser;
 import org.junit.jupiter.api.Test;
@@ -26,12 +27,7 @@ public class SitterUserRepositoryTest {
         String userId = testUtils.getRandomUserId();
 
         SitterUser sut = SitterUser.builder()
-                .name("홍길동")
-                .birthAt(LocalDate.of(1990, 1, 1))
-                .gender("Male")
-                .userId(userId)
-                .password("password")
-                .email("test001@gmail.com")
+                .user(testUtils.getUser(userId))
                 .minChildAge(3)
                 .maxChildAge(5)
                 .bio("자기소개")
@@ -39,17 +35,18 @@ public class SitterUserRepositoryTest {
 
         sitterRepository.save(sut);
 
-        SitterUser sitterUser = sitterRepository.findByUserId(userId);
+        SitterUser sitterUser = sitterRepository.findByUserUserId(userId);
+        User user = sitterUser.getUser();
 
-        assertThat(sitterUser.getName()).isEqualTo("홍길동");
-        assertThat(sitterUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
-        assertThat(sitterUser.getGender()).isEqualTo("Male");
-        assertThat(sitterUser.getUserId()).isEqualTo(userId);
-        assertThat(sitterUser.getPassword()).isEqualTo("password");
-        assertThat(sitterUser.getEmail()).isEqualTo("test001@gmail.com");
+        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
+        assertThat(user.getGender()).isEqualTo("Male");
+        assertThat(user.getUserId()).isEqualTo(userId);
+        assertThat(user.getPassword()).isEqualTo("qwer1234!");
+        assertThat(user.getEmail()).isEqualTo("test001@gmail.com");
         assertThat(sitterUser.getMinChildAge()).isEqualTo(3);
         assertThat(sitterUser.getMaxChildAge()).isEqualTo(5);
         assertThat(sitterUser.getBio()).isEqualTo("자기소개");
-        assertThat(sitterUser.getCreatedAt()).isNotNull();
+        assertThat(user.getCreatedAt()).isNotNull();
     }
 }

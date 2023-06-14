@@ -4,9 +4,9 @@ import com.mfort.user.model.request.UpdateParentRequest;
 import com.mfort.user.model.vo.Child;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -21,22 +21,28 @@ import java.util.List;
 @Table(name = "TB_PARENT")
 @TypeDef(name = "json", typeClass = JsonType.class)
 @Getter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
-@PrimaryKeyJoinColumn(name = "userNumber")
-public class ParentUser extends User {
+public class ParentUser {
+    @Id
+    private int userNumber;
     @Type(type = "json")
     @Column(name = "children", columnDefinition = "longtext")
     private List<Child> children;
     private String requirements;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "USER_NUMBER")
+    private User user;
+
     @CreatedDate
     private LocalDateTime parentCreatedAt;
 
     public void updateParent(UpdateParentRequest request) {
-        super.updateUser(request);
+        user.updateUser(request);
         if (request.getChildren() != null) {
             this.children = request.getChildren();
         }

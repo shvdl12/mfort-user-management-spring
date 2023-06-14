@@ -3,12 +3,14 @@ spring:
     url: jdbc:mariadb://localhost:3306/mfort
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: root
+    password: koamisecenter
     hikari:
       connection-test-query: SELECT 1
 
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true

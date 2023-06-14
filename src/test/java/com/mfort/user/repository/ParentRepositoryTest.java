@@ -1,7 +1,8 @@
 package com.mfort.user.repository;
 
-import com.mfort.user.utils.TestUtils;
+import com.mfort.user.model.domain.User;
 import com.mfort.user.model.domain.ParentUser;
+import com.mfort.user.utils.TestUtils;
 import com.mfort.user.model.vo.Child;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,27 +28,24 @@ public class ParentRepositoryTest {
 
         String userId = testUtils.getRandomUserId();
 
+
         ParentUser sut = ParentUser.builder()
-                .name("홍길동")
-                .birthAt(LocalDate.of(1990, 1, 1))
-                .gender("Male")
-                .userId(userId)
-                .password("password")
-                .email("test001@gmail.com")
+                .user(testUtils.getUser(userId))
                 .children(testUtils.getChildren())
                 .requirements("요구사항")
                 .build();
 
         parentRepository.save(sut);
 
-        ParentUser parentUser = parentRepository.findByUserId(userId);
+        ParentUser parentUser = parentRepository.findByUserUserId(userId);
+        User user = parentUser.getUser();
 
-        assertThat(parentUser.getName()).isEqualTo("홍길동");
-        assertThat(parentUser.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
-        assertThat(parentUser.getGender()).isEqualTo("Male");
-        assertThat(parentUser.getUserId()).isEqualTo(userId);
-        assertThat(parentUser.getPassword()).isEqualTo("password");
-        assertThat(parentUser.getEmail()).isEqualTo("test001@gmail.com");
+        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getBirthAt()).isEqualTo(LocalDate.of(1990, 1, 1));
+        assertThat(user.getGender()).isEqualTo("Male");
+        assertThat(user.getUserId()).isEqualTo(userId);
+        assertThat(user.getPassword()).isEqualTo("qwer1234!");
+        assertThat(user.getEmail()).isEqualTo("test001@gmail.com");
         assertThat(parentUser.getRequirements()).isEqualTo("요구사항");
 
         List<Child> children = parentUser.getChildren();

@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,7 @@ public class UpdateUserApiTest {
         String token = testUtils.getToken(userId, password);
 
         UpdateSitterRequest request = UpdateSitterRequest.builder()
+                .gender("Female")
                 .minChildAge(6)
                 .maxChildAge(8)
                 .bio("안녕하세요 홍길동입니다.")
@@ -68,6 +70,7 @@ public class UpdateUserApiTest {
 
                     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
                     assertThat(res.getCode()).isEqualTo(ResponseCode.SUCCESS.getCode());
+                    assertThat(res.getData().getGender()).isEqualTo("Female");
                     assertThat(res.getData().getMinChildAge()).isEqualTo(6);
                     assertThat(res.getData().getMaxChildAge()).isEqualTo(8);
                     assertThat(res.getData().getBio()).isEqualTo("안녕하세요 홍길동입니다.");
@@ -90,6 +93,7 @@ public class UpdateUserApiTest {
         );
 
         UpdateParentRequest request = UpdateParentRequest.builder()
+                .email("shvdl12@new.com")
                 .children(children)
                 .requirements("요리가 가능한 분")
                 .build();
@@ -109,6 +113,7 @@ public class UpdateUserApiTest {
 
                     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
                     assertThat(res.getCode()).isEqualTo(ResponseCode.SUCCESS.getCode());
+                    assertThat(res.getData().getEmail()).isEqualTo("shvdl12@new.com");
                     assertThat(res.getData().getChildren()).hasSize(3);
                     assertThat(res.getData().getRequirements()).isEqualTo("요리가 가능한 분");
                 });

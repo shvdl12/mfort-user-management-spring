@@ -1,6 +1,8 @@
 package com.mfort.user.utils;
 
+import com.mfort.user.model.domain.User;
 import com.mfort.user.model.request.ParentSignUpRequest;
+import com.mfort.user.model.request.RegisterSitterRequest;
 import com.mfort.user.model.request.SitterSignUpRequest;
 import com.mfort.user.model.vo.Child;
 import com.mfort.user.service.AuthService;
@@ -64,5 +66,23 @@ public class TestUtils {
                 .build();
 
         userService.signUpParent(user);
+    }
+
+    public void registerSitter(String userId) {
+        userService.registerSitter(RegisterSitterRequest.builder()
+                .minChildAge(0)
+                .maxChildAge(5)
+                .build(), userId);
+    }
+
+    public User getUser(String userId) {
+        return User.builder()
+                .name("홍길동")
+                .birthAt(LocalDate.of(1990, 1, 1))
+                .gender("Male")
+                .userId(userId)
+                .password("qwer1234!")
+                .email("test001@gmail.com")
+                .build();
     }
 }

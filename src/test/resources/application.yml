@@ -3,7 +3,7 @@ spring:
     url: jdbc:mariadb://localhost:3306/mfort
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: root
+    password: koamisecenter
     hikari:
       connection-test-query: SELECT 1
 
@@ -19,3 +19,8 @@ server:
   servlet:
     encoding:
       force-response: true
+
+logging:
+  level:
+    root: info
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

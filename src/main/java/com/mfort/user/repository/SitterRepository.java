@@ -10,12 +10,13 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface SitterRepository extends JpaRepository<SitterUser, Integer> {
-    boolean existsByUserId(String userId);
+    boolean existsByUserUserId(String userId);
 
-    SitterUser findByUserId(String userId);
+    SitterUser findByUserUserId(String userId);
 
     @Modifying
-    @Query(value = "INSERT INTO TB_SITTER VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
+    @Query(value = "INSERT INTO TB_SITTER(USER_NUMBER, MIN_CHILD_AGE, MAX_CHILD_AGE, BIO, SITTER_CREATED_AT)" +
+            " VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
     void insertOnlySitter(Integer userNumber, Integer minChildAge
             , Integer maxChildAge, String bio
             , LocalDateTime sitterCreatedAt);
